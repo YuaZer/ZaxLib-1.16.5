@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="netty-transport-native-unix-common-4.1.77.Final">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../开发API/netty/netty-transport-native-unix-common-4.1.77.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../开发API/netty/netty-transport-classes-epoll-4.1.77.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../开发API/netty/netty-transport-4.1.77.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../开发API/netty/netty-resolver-4.1.77.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../开发API/netty/netty-handler-4.1.77.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../开发API/netty/netty-common-4.1.77.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../开发API/netty/netty-codec-4.1.77.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../开发API/netty/netty-buffer-4.1.77.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

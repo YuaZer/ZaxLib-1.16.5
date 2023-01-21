@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="forgespi-3.2.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../开发API/1.16.5/forgespi-3.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../开发API/1.16.5/forge-1.16.5-36.2.35-universal.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../开发API/1.16.5/forge-1.16.5-36.2.35-server.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../开发API/1.16.5/eventbus-4.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../开发API/1.16.5/authlib-2.1.28.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../开发API/1.16.5/[开发][1.16.5]CatserverSRG-1.16.5-srg.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/src" />
+    </SOURCES>
+  </library>
+</component>

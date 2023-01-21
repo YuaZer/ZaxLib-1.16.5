@@ -1,0 +1,10 @@
+name: ZaxLib
+main: io.github.yuazer.zaxlib.Main
+version: 2.4
+api-version: 1.13
+commands:
+  zaxlib:
+    usage: /zaxlib
+    description: command for this plugin
+authors:
+  - YuaZer

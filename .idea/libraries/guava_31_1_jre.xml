@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="guava-31.1-jre">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../开发API/guava-31.1-jre.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../开发API/slf4j-api-2.0.0-alpha7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
