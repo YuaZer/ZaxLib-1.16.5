@@ -7,53 +7,31 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
 public class NetClassLoader {
-    public static Object getUrlObj(String jarURL, String classFullName) throws ClassNotFoundException {
+    public static Class getUrlClass(String jarUrl, String classFullName) {
+        Class clazz1 = null;
         try {
-            File file = new File(io.github.yuazer.zaxlib.Main.getInstance().getDataFolder(), "data.txt");
-            //File file = new File("C://data.txt");
-            BufferedReader in = new BufferedReader(new FileReader(file));
-            String s = new String();
-            while ((s = in.readLine()) != null) {
-                URL url = new URL(s);
-                s = null;
-                URL url1 = new URL(jarURL);
-                URLClassLoader myClassLoader = new URLClassLoader(new URL[]{url}, Thread.currentThread().getContextClassLoader());
-                Class myClass = myClassLoader.loadClass(classFullName);
-                Object obj = myClass.newInstance();
-                return obj;
-            }
-        } catch (Exception e) {
+            URL[] urls = new URL[]{new URL(jarUrl)};
+            URLClassLoader urlClassLoader = new URLClassLoader(urls);
+            clazz1 = urlClassLoader.loadClass(classFullName);
+            return clazz1;
+        } catch (MalformedURLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
-    }
-    public static Class getUrlClass(String jarURL, String classFullName) throws ClassNotFoundException {
-        try {
-            File file = new File(io.github.yuazer.zaxlib.Main.getInstance().getDataFolder(), "data.txt");
-            //File file = new File("C://data.txt");
-            BufferedReader in = new BufferedReader(new FileReader(file));
-            String s = new String();
-            while ((s = in.readLine()) != null) {
-                URL url = new URL(s);
-                s = null;
-                URL url1 = new URL(jarURL);
-                URLClassLoader myClassLoader = new URLClassLoader(new URL[]{url}, Thread.currentThread().getContextClassLoader());
-                Class myClass = myClassLoader.loadClass(classFullName);
-                return myClass;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return clazz1;
     }
 
     public static void main(String[] args) throws Exception {
-        Main obj = (Main) getUrlClass("http://e.ytonidc.com:18081/update/ClassLoaderTestPlugin.jar", "io.github.yuazer.cltp.Main").newInstance();
-        //Main obj = (Main) getUrlObj("http://e.ytonidc.com:18081/update/ClassLoaderTestPlugin.jar", "io.github.yuazer.cltp.Main");
-        System.out.println(obj.test());
+        URL[] urls = new URL[]{new URL("https://yuazer.github.io/myH5/ClassLoaderTestPlugin.jar")};
+        URLClassLoader urlClassLoader = new URLClassLoader(urls);
+        Class clazz1 = urlClassLoader.loadClass("io.github.yuazer.cltp.Main");
+        clazz1.getDeclaredConstructor().setAccessible(true);
+        Object obj1 = clazz1.newInstance();
+        Method m = clazz1.getDeclaredMethod("sout");
+        m.invoke(obj1);
     }
 }
