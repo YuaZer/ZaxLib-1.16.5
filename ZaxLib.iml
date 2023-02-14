@@ -28,5 +28,6 @@
     <orderEntry type="library" name="netty-transport-native-unix-common-4.1.77.Final" level="project" />
     <orderEntry type="library" name="gson-2.8.9" level="project" />
     <orderEntry type="library" name="asm-analysis-9.3" level="project" />
+    <orderEntry type="library" name="libraries" level="project" />
   </component>
 </module>
