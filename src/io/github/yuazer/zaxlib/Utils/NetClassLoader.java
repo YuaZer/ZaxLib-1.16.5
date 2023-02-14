@@ -14,6 +14,7 @@ import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 
 public class NetClassLoader {
+    /**从URL获取Class*/
     public static Class getUrlClass(String jarUrl, String classFullName) {
         Class clazz1 = null;
         try {
@@ -26,8 +27,9 @@ public class NetClassLoader {
         }
         return clazz1;
     }
+    /**从URL获取YAML文件
+     * */
     public static YamlConfiguration getYamlFromUrl(String Url) {
-        //从URL获取YAML文件
         InputStreamReader reader = null;
         try {
             URL url = new URL(Url);
