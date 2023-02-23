@@ -18,6 +18,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class GuiModel implements InventoryHolder, Listener {
     private final Inventory inventory;
@@ -34,15 +35,25 @@ public class GuiModel implements InventoryHolder, Listener {
     public void setItem(HashMap<Integer, ItemStack> itemMap) {
         Iterator var2 = itemMap.entrySet().iterator();
 
-        while(var2.hasNext()) {
-            Entry<Integer, ItemStack> entry = (Entry)var2.next();
-            this.setItem((Integer)entry.getKey(), (ItemStack)entry.getValue());
+        while (var2.hasNext()) {
+            Entry<Integer, ItemStack> entry = (Entry) var2.next();
+            this.setItem((Integer) entry.getKey(), (ItemStack) entry.getValue());
         }
 
     }
 
     public void openInventory(Player player) {
         player.openInventory(this.getInventory());
+    }
+
+    public void openInventoryAsync(Plugin plugin, Player player) {
+        Inventory finalInventory = this.getInventory();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Bukkit.getScheduler().runTask(plugin, () -> player.openInventory(finalInventory));
+            }
+        }.runTaskAsynchronously(plugin);
     }
 
     public boolean closeRemove() {
@@ -57,7 +68,9 @@ public class GuiModel implements InventoryHolder, Listener {
         this.inventory.setItem(slot, itemStack);
     }
 
-    /** @deprecated */
+    /**
+     * @deprecated
+     */
     @Deprecated
     public void setListener(boolean listener) {
         this.registerListener(Main.getInstance());
@@ -79,8 +92,8 @@ public class GuiModel implements InventoryHolder, Listener {
         if (close) {
             Iterator iterator = this.inventory.getViewers().iterator();
 
-            while(iterator.hasNext()) {
-                HumanEntity humanEntity = (HumanEntity)iterator.next();
+            while (iterator.hasNext()) {
+                HumanEntity humanEntity = (HumanEntity) iterator.next();
                 if (humanEntity.getOpenInventory().getTopInventory() == this.inventory) {
                     humanEntity.closeInventory();
                 }

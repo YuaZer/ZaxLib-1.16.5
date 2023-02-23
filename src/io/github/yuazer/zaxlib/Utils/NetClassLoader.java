@@ -55,12 +55,14 @@ public class NetClassLoader {
 //            URL[] urls = new URL[]{new URL("https://yuazer.github.io/myH5/ClassLoaderTestPlugin.jar")};
 //            URLClassLoader urlClassLoader = new URLClassLoader(urls);
 //            Class clazz1 = urlClassLoader.loadClass("io.github.yuazer.cltp.Main");
-            Class clazz1 = getUrlClass("https://yuazer.github.io/myH5/ClassLoaderTestPlugin.jar","io.github.yuazer.cltp.Main");
-            Constructor c = clazz1.getDeclaredConstructor();
-            c.setAccessible(true);
+            //Class clazz1 = getUrlClass("https://yuazer.github.io/myH5/ClassLoaderTestPlugin.jar","io.github.yuazer.cltp.Main");
+            Class<?> clazz1 = io.github.yuazer.cltp.Main.class;
             Object obj1 = clazz1.newInstance();
-            Method m = clazz1.getDeclaredMethod("test");
-            System.out.println(m.invoke(obj1));
+            Constructor c = clazz1.getDeclaredConstructor();
+            Method m = clazz1.getDeclaredMethod("test2", String.class);
+            c.setAccessible(true);
+            m.setAccessible(true);
+            System.out.println(m.invoke(obj1,new Object[]{"我是自定义的参数呀~"}));
         }catch (InstantiationException|IllegalAccessException| InvocationTargetException e){
             e.printStackTrace();
         }catch (NoSuchMethodException e){

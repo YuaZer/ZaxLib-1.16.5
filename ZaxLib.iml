@@ -21,7 +21,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="forgespi-3.2.0" level="project" />
-    <orderEntry type="library" name="ClassLoaderTestPlugin" level="project" />
     <orderEntry type="library" name="[9.0.6]Pixelmon-1.16.5-9.0.6-server" level="project" />
     <orderEntry type="library" name="guava-31.1-jre" level="project" />
     <orderEntry type="library" name="netty" level="project" />
@@ -29,5 +28,6 @@
     <orderEntry type="library" name="gson-2.8.9" level="project" />
     <orderEntry type="library" name="asm-analysis-9.3" level="project" />
     <orderEntry type="library" name="libraries" level="project" />
+    <orderEntry type="library" name="ClassLoaderTestPlugin" level="project" />
   </component>
 </module>

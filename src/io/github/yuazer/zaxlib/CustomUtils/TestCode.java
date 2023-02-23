@@ -18,12 +18,8 @@ import java.util.*;
 
 public class TestCode {
     public static void main(String[] args) {
-        List<String> list = new ArrayList<>();
-        list.add("&aaa");
-        list.add("&bbb");
-        list.add("&ccc");
-        for (int i=0;i<list.size();i++){
-            System.out.println(list.get(i).replace("&","t"));
+        for(int x=11;x<=92;x++){
+            System.out.println(String.format("addModel(EnumSpecies.Hu%s, new PixelmonSmdFactory(EnumPokemonModel.Hu%s));",String.valueOf(x),String.valueOf(x)));
         }
     }
 }

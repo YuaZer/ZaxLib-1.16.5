@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="ClassLoaderTestPlugin">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../ClassLoaderTestPlugin/out/artifacts/ClassLoaderTestPlugin/ClassLoaderTestPlugin.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
