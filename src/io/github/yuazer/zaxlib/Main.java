@@ -1,5 +1,6 @@
 package io.github.yuazer.zaxlib;
 
+import io.github.yuazer.zaxlib.Utils.PluginWelCome;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -15,8 +16,9 @@ public class Main extends JavaPlugin{
     @Override
     public void onEnable() {
         instance = this;
-        getLogger().info("§a[ZaxLib-1.16.5] §f已加载");
-        getLogger().info("§b版本:§e"+getDescription().getVersion());
+//        getLogger().info("§a[ZaxLib-1.16.5] §f已加载");
+//        getLogger().info("§b版本:§e"+getDescription().getVersion());
+        PluginWelCome.logLoaded(this);
         saveDefaultConfig();
         File file1 = new File(this.getDataFolder(), "data.txt");
         saveResource("data.txt", true);
@@ -36,7 +38,8 @@ public class Main extends JavaPlugin{
 
     @Override
     public void onDisable() {
-        getLogger().info("§a[ZaxLib] §c已卸载");
+//        getLogger().info("§a[ZaxLib] §c已卸载");
+        PluginWelCome.logDisable(this);
     }
 
 }

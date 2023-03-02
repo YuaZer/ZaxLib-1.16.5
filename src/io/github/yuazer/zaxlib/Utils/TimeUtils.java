@@ -44,21 +44,6 @@ public class TimeUtils {
                 week = "错误";
                 break;
         }
-//        if (weekday == 1) {
-//            week = "周日";
-//        } else if (weekday == 2) {
-//            week = "周一";
-//        } else if (weekday == 3) {
-//            week = "周二";
-//        } else if (weekday == 4) {
-//            week = "周三";
-//        } else if (weekday == 5) {
-//            week = "周四";
-//        } else if (weekday == 6) {
-//            week = "周五";
-//        } else if (weekday == 7) {
-//            week = "周六";
-//        }
         return week;
     }
 

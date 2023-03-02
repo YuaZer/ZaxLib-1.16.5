@@ -18,9 +18,7 @@ import java.util.*;
 
 public class TestCode {
     public static void main(String[] args) {
-        for(int x=11;x<=92;x++){
-            System.out.println(String.format("addModel(EnumSpecies.Hu%s, new PixelmonSmdFactory(EnumPokemonModel.Hu%s));",String.valueOf(x),String.valueOf(x)));
-        }
+
     }
 }
 
