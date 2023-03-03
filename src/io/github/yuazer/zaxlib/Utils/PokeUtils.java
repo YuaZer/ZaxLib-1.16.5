@@ -57,7 +57,8 @@ public class PokeUtils {
         Pokemon pokemon = PokemonFactory.create(CompressedStreamTools.func_74797_a(file));
         return pokemon;
     }
-    //发起玩家和指定List<Pokemon>的单打对战
+
+    //发起玩家和指定List<Pokemon>的单打对战(NPCTrainer)
     public static void battlePokemon(Player player, List<Pokemon> pokemons) {
         NPCTrainer npcTrainer = new NPCTrainer(NMSUtils.bkToNmsWorld(player.getWorld()));
         for (int i = 0; i <= pokemons.size() - 1; i++) {
@@ -70,11 +71,28 @@ public class PokeUtils {
                 };
         BattleParticipant[] tp = {new TrainerParticipant(npcTrainer, 1)};
         //tp.startBattle(bp.bc);
-        BattleRegistry.startBattle(tp, bp,new BattleRules());
+        BattleRegistry.startBattle(tp, bp, new BattleRules());
     }
+
     public static ServerPlayerEntity getServerPlayerEntity(Player player) {
         UUID playerUUID = player.getUniqueId();
         return playerUUID == null ? null : ServerLifecycleHooks.getCurrentServer().func_184103_al().func_177451_a(playerUUID);
+    }
+
+    //发起玩家和指定精灵的单打对战(Wild)
+    public static void battlePokemon_Wild(Player player, File file) {
+        try {
+            Pokemon pokemon = getPokemonInFile_NBT(file);
+//            BattleParticipant[] bp = new PlayerParticipant[]{new PlayerParticipant(PlayerUtil.getServerPlayerEntity(player), pokemon.getOrSpawnPixelmon
+//                    (bkToNmsWorld(player.getWorld()), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ()))};
+            BattleParticipant[] bp = {
+                    new PlayerParticipant(PlayerUtil.getServerPlayerEntity(player),
+                            StorageProxy.getParty(player.getUniqueId()).getAndSendOutFirstAblePokemon(PlayerUtil.getServerPlayerEntity(player)))};
+            BattleParticipant[] tp = {new WildPixelmonParticipant(pokemon.getOrSpawnPixelmon(bkToNmsWorld(player.getWorld()), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ()))};
+            BattleRegistry.startBattle(tp, bp, new BattleRules());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public LivingEntity getPokemon(int entityid) {
