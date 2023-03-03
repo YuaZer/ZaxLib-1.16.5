@@ -83,6 +83,7 @@ public class PokeUtils {
     public static void battlePokemon_Wild(Player player, File file) {
         try {
             Pokemon pokemon = getPokemonInFile_NBT(file);
+            pokemon.setUUID(UUID.randomUUID());
 //            BattleParticipant[] bp = new PlayerParticipant[]{new PlayerParticipant(PlayerUtil.getServerPlayerEntity(player), pokemon.getOrSpawnPixelmon
 //                    (bkToNmsWorld(player.getWorld()), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ()))};
             BattleParticipant[] bp = {
