@@ -9,12 +9,17 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class NetClassLoader {
-    /**从URL获取Class*/
+    /**
+     * 从URL获取Class
+     */
     public static Class getUrlClass(String jarUrl, String classFullName) {
         Class clazz1 = null;
         try {
@@ -27,8 +32,10 @@ public class NetClassLoader {
         }
         return clazz1;
     }
-    /**从URL获取YAML文件
-     * */
+
+    /**
+     * 从URL获取YAML文件
+     */
     public static YamlConfiguration getYamlFromUrl(String Url) {
         InputStreamReader reader = null;
         try {
@@ -50,6 +57,24 @@ public class NetClassLoader {
         }
         return YamlConfiguration.loadConfiguration(reader);
     }
+    /**
+     * 将Class转化为byte[]
+     *
+     * @param Class 需要被转化的Class
+     *
+     * */
+    public static byte[] classToByte(Class clazz) {
+        byte[] bytes = new byte[0];
+        try {
+            bytes = Files.readAllBytes(Paths.get(clazz.getResource(clazz.getSimpleName() + ".class").toURI()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+        return bytes;
+    }
+
     public static void main(String[] args) {
         try {
 //            URL[] urls = new URL[]{new URL("https://yuazer.github.io/myH5/ClassLoaderTestPlugin.jar")};
@@ -62,10 +87,10 @@ public class NetClassLoader {
             Method m = clazz1.getDeclaredMethod("test2", String.class);
             c.setAccessible(true);
             m.setAccessible(true);
-            System.out.println(m.invoke(obj1,new Object[]{"我是自定义的参数呀~"}));
-        }catch (InstantiationException|IllegalAccessException| InvocationTargetException e){
+            System.out.println(m.invoke(obj1, new Object[]{"我是自定义的参数呀~"}));
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
-        }catch (NoSuchMethodException e){
+        } catch (NoSuchMethodException e) {
             System.out.println("类或方法不存在");
         }
     }
