@@ -34,10 +34,10 @@ public class NetClassLoader {
         }
         return clazz1;
     }
-    public static Class getUrlClass_Encrypt(String EncryptjarUrl, String classFullName) {
+    public static Class getUrlClass_Encrypt(String EncryptjarUrl, String classFullName,String key) {
         Class clazz1 = null;
         try {
-            String jarUrl = EncryptUtil.decryptAES(EncryptjarUrl,EncryptUtil.generateAESKey());
+            String jarUrl = EncryptUtil.decryptAES(EncryptjarUrl,key);
             URL[] urls = new URL[]{new URL(jarUrl)};
             URLClassLoader urlClassLoader = new URLClassLoader(urls);
             clazz1 = urlClassLoader.loadClass(classFullName);

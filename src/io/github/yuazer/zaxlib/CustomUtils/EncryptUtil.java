@@ -23,7 +23,7 @@ public class EncryptUtil {
         keyGenerator.init(128);
         SecretKey secretKey = keyGenerator.generateKey();
         byte[] keyBytes = secretKey.getEncoded();
-        return Base64.getEncoder().encodeToString(keyBytes);
+        return Base64.getUrlEncoder().encodeToString(keyBytes);
     }
 
     /**
