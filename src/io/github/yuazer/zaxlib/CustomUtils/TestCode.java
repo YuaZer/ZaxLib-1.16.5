@@ -1,8 +1,7 @@
 package io.github.yuazer.zaxlib.CustomUtils;
 
-
-import io.github.yuazer.zaxlib.Utils.MyClassLoader;
 import io.github.yuazer.zaxlib.Utils.NetClassLoader;
+import io.github.yuazer.zaxlib.Utils.ZaxClassLoader;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import javax.swing.*;
@@ -24,8 +23,8 @@ import java.util.*;
 public class TestCode {
     public static void main(String[] args) {
         byte[] bytes = NetClassLoader.classToByte(LoaderTest.class);
-        MyClassLoader myClassLoader = new MyClassLoader();
-        Class clazz = myClassLoader.defineClass(LoaderTest.class.getName(),bytes);
+        ZaxClassLoader myClassLoader = new ZaxClassLoader();
+        Class clazz = myClassLoader.ZaxdefineClass(LoaderTest.class.getName(),bytes);
         try {
             Object obj1 = clazz.newInstance();
             Constructor c = clazz.getDeclaredConstructor();

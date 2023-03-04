@@ -31,11 +31,12 @@ public class verifyCheck {
         String finalIp = ip;
         ConnectedSocket cs = new ConnectedSocket(socket, new MessageHandler() {
             @Override
-            public void onMessageReceive(SocketEvent e, String message) {
+            public void onMessageReceive(SocketEvent e, Object message) {
                 /**
                  *当客户端接收到来自服务端发过来的消息时，进行判断
                  */
-                switch (message) {
+                String msg = message.toString();
+                switch (msg) {
                     case "Z菌网络验证系统连接成功！":
                         break;
                     case "true":

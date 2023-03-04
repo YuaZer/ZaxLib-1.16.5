@@ -64,15 +64,30 @@ public class NetClassLoader {
      *
      * */
     public static byte[] classToByte(Class clazz) {
-        byte[] bytes = new byte[0];
-        try {
-            bytes = Files.readAllBytes(Paths.get(clazz.getResource(clazz.getSimpleName() + ".class").toURI()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+        String resourceName = clazz.getName().replace(".", "/") + ".class";
+        InputStream input = clazz.getClassLoader().getResourceAsStream(resourceName);
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        byte[] buffer = new byte[4096];
+        int n = 0;
+        while (true) {
+            try {
+                if (!((n = input.read(buffer)) != -1)) break;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            output.write(buffer, 0, n);
         }
-        return bytes;
+
+        return output.toByteArray();
+//        byte[] bytes = new byte[8096];
+//        try {
+//            bytes = Files.readAllBytes(Paths.get(clazz.getResource(clazz.getSimpleName() + ".class").toURI()));
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        } catch (URISyntaxException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return bytes;
     }
 
     public static void main(String[] args) {
