@@ -2,6 +2,7 @@ package io.github.yuazer.zaxlib.Utils;
 
 import io.github.yuazer.cltp.Main;
 import io.github.yuazer.cltp.TestInterface;
+import io.github.yuazer.zaxlib.CustomUtils.EncryptUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
@@ -15,6 +16,7 @@ import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
 
 public class NetClassLoader {
     /**
@@ -32,7 +34,21 @@ public class NetClassLoader {
         }
         return clazz1;
     }
-
+    public static Class getUrlClass_Encrypt(String EncryptjarUrl, String classFullName) {
+        Class clazz1 = null;
+        try {
+            String jarUrl = EncryptUtil.decryptAES(EncryptjarUrl,EncryptUtil.generateAESKey());
+            URL[] urls = new URL[]{new URL(jarUrl)};
+            URLClassLoader urlClassLoader = new URLClassLoader(urls);
+            clazz1 = urlClassLoader.loadClass(classFullName);
+            return clazz1;
+        } catch (MalformedURLException | ClassNotFoundException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return clazz1;
+    }
     /**
      * 从URL获取YAML文件
      */
