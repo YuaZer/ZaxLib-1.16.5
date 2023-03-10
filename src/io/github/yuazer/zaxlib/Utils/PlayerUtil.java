@@ -5,8 +5,10 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.*;
 import java.util.UUID;
 
 public class PlayerUtil {
@@ -137,5 +139,21 @@ public class PlayerUtil {
                 return;
             }
         }
+    }
+    public static void saveInventoryToFile(Inventory inventory, File file) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(inventory);
+        objectOutputStream.close();
+        fileOutputStream.close();
+    }
+
+    public static Inventory loadInventoryFromFile(File file) throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream(file);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        Inventory inventory = (Inventory) objectInputStream.readObject();
+        objectInputStream.close();
+        fileInputStream.close();
+        return inventory;
     }
 }

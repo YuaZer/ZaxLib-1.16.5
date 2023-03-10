@@ -17,10 +17,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 public class NetClassLoader {
     /**
      * 从URL获取Class
+     *
+     * @param jarUrl        目标jar的URL链接
+     * @param classFullName class路径
+     * @return Class
      */
     public static Class getUrlClass(String jarUrl, String classFullName) {
         Class clazz1 = null;
@@ -34,10 +39,33 @@ public class NetClassLoader {
         }
         return clazz1;
     }
-    public static Class getUrlClass_Encrypt(String EncryptjarUrl, String classFullName,String key) {
+    /**
+     * 从经过Base64加密后的URL获取Class
+     *
+     * @param encodeJarUrl        目标jar的URL链接
+     * @param classFullName class路径
+     * @return Class
+     */
+    public static Class getUrlClass_decode(String encodeJarUrl, String classFullName) {
         Class clazz1 = null;
         try {
-            String jarUrl = EncryptUtil.decryptAES(EncryptjarUrl,key);
+            String decodedUrl = new String(Base64.getUrlDecoder().decode(encodeJarUrl), "UTF-8");
+            URL[] urls = new URL[]{new URL(decodedUrl)};
+            URLClassLoader urlClassLoader = new URLClassLoader(urls);
+            clazz1 = urlClassLoader.loadClass(classFullName);
+            return clazz1;
+        } catch (MalformedURLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        return clazz1;
+    }
+
+    public static Class getUrlClass_Encrypt(String EncryptjarUrl, String classFullName, String key) {
+        Class clazz1 = null;
+        try {
+            String jarUrl = EncryptUtil.decryptAES(EncryptjarUrl, key);
             URL[] urls = new URL[]{new URL(jarUrl)};
             URLClassLoader urlClassLoader = new URLClassLoader(urls);
             clazz1 = urlClassLoader.loadClass(classFullName);
@@ -49,8 +77,12 @@ public class NetClassLoader {
         }
         return clazz1;
     }
+
     /**
      * 从URL获取YAML文件
+     *
+     * @param Url Yaml文件的URL链接
+     * @return YamlConfiguration
      */
     public static YamlConfiguration getYamlFromUrl(String Url) {
         InputStreamReader reader = null;
@@ -73,12 +105,13 @@ public class NetClassLoader {
         }
         return YamlConfiguration.loadConfiguration(reader);
     }
+
     /**
      * 将Class转化为byte[]
      *
-     * @param Class 需要被转化的Class
-     *
-     * */
+     * @param clazz 需要被转为byte[]的Class对象
+     * @return byte[]
+     */
     public static byte[] classToByte(Class clazz) {
         String resourceName = clazz.getName().replace(".", "/") + ".class";
         InputStream input = clazz.getClassLoader().getResourceAsStream(resourceName);
@@ -93,7 +126,6 @@ public class NetClassLoader {
             }
             output.write(buffer, 0, n);
         }
-
         return output.toByteArray();
 //        byte[] bytes = new byte[8096];
 //        try {
@@ -104,6 +136,29 @@ public class NetClassLoader {
 //            throw new RuntimeException(e);
 //        }
 //        return bytes;
+    }
+
+    public static byte[] classToByte_Obj(Object obj) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(bos);
+            oos.writeObject(obj);
+            oos.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        byte[] bytes = bos.toByteArray();
+        return bytes;
+    }
+
+    /**
+     * byte[]转为class
+     */
+    public static Class<?> deserializeClass(byte[] data) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream bis = new ByteArrayInputStream(data);
+        ObjectInputStream ois = new ObjectInputStream(bis);
+        return (Class<?>) ois.readObject();
     }
 
     public static void main(String[] args) {
