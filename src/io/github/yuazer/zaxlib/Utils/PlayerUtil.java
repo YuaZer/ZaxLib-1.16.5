@@ -118,7 +118,6 @@ public class PlayerUtil {
         }
         return hasNull;
     }
-
     public static void takeNameItem(Player player, String name, int amount) {
         int maxSlot = 35;
         int need = amount;

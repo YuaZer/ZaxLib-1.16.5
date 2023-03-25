@@ -23,35 +23,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TestCode {
-    public static void main(String[] args) {
-//        byte[] bytes = NetClassLoader.classToByte(LoaderTest.class);
-//        ZaxClassLoader myClassLoader = new ZaxClassLoader();
-//        Class clazz = myClassLoader.ZaxdefineClass(LoaderTest.class.getName(),bytes);
-//        try {
-//            Object obj1 = clazz.newInstance();
-//            Constructor c = clazz.getDeclaredConstructor();
-//            Method method = clazz.getDeclaredMethod("say");
-//            method.setAccessible(false);
-//            method.invoke(obj1);
-//        } catch (NoSuchMethodException e) {
-//            throw new RuntimeException(e);
-//        } catch (InstantiationException e) {
-//            throw new RuntimeException(e);
-//        } catch (IllegalAccessException e) {
-//            throw new RuntimeException(e);
-//        } catch (InvocationTargetException e) {
-//            throw new RuntimeException(e);
-//        }
-        String str = "zaxpoints_cmi_usermate_zaxpoints_18";
-        String regex = "zaxpoints_(.*?)_[0-9]+";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(str);
-        if (matcher.find()) {
-            String rankAPI = matcher.group(1); // 获取第一个捕获组的内容
-            System.out.println(rankAPI); // 输出 XXX_XXX_XXX
-            int rankNumber = Integer.parseInt(str.replace(rankAPI+"_","").replace("zaxpoints_",""));
-            System.out.println(rankNumber);
+    private static Map<String, String> parseQueryParams(String query) {
+        Map<String, String> queryParams = new HashMap<>();
+        if (query != null) {
+            String[] params = query.split("&");
+            for (String param : params) {
+                String[] parts = param.split("=");
+                if (parts.length == 2) {
+                    queryParams.put(parts[0], parts[1]);
+                }
+            }
         }
+        return queryParams;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(parseQueryParams("personName=YuaZer&papiName=cmi_user_name"));
     }
 }
 
