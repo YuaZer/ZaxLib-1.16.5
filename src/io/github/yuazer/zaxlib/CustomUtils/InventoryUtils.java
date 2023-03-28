@@ -1,13 +1,17 @@
 package io.github.yuazer.zaxlib.CustomUtils;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Nameable;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InventoryUtils {
     public static String getInventoryTitle(Inventory inventory) {
@@ -57,5 +61,31 @@ public class InventoryUtils {
         }
 
         return inventory;
+    }
+    /**
+     * 获取非空气物品集合
+     * */
+    public static List<ItemStack> getNonAirItemStacks(Inventory inventory) {
+        List<ItemStack> nonAirItemStacks = new ArrayList<>();
+        ItemStack[] contents = inventory.getContents();
+        for (ItemStack itemStack : contents) {
+            if (itemStack != null && itemStack.getType() != Material.AIR) {
+                nonAirItemStacks.add(itemStack);
+            }
+        }
+        return nonAirItemStacks;
+    }
+    /**
+     * 获取非空气并且有Lore的物品集合
+     * */
+    public static List<ItemStack> getItemStacksWithLore(Inventory inventory) {
+        List<ItemStack> itemStacksWithLore = new ArrayList<>();
+        ItemStack[] contents = inventory.getContents();
+        for (ItemStack itemStack : contents) {
+            if (itemStack != null && itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore()) {
+                itemStacksWithLore.add(itemStack);
+            }
+        }
+        return itemStacksWithLore;
     }
 }
