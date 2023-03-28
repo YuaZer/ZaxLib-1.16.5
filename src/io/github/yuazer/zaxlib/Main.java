@@ -38,7 +38,6 @@ public class Main extends JavaPlugin{
 
     @Override
     public void onDisable() {
-//        getLogger().info("§a[ZaxLib] §c已卸载");
         PluginWelCome.logDisable(this);
     }
 
