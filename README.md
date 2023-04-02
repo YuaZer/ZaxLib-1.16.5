@@ -126,7 +126,28 @@ io.github.yuazer.zaxlib.Utils.TimeUtils
 (周一，周二，周三，周四，周五，周六，周日)
 String getWeek()
 ```
+# Inventory工具
+```plain
+io.github.yuazer.zaxlib.CustomUtils.InventoryUtils
 
+/**
+     * 将给定的Inventory对象存储为YAML文件
+     *
+     * @param inventory 需要被存储的Inventory对象
+     * @param file      需要被存储的文件
+     * @throws IOException 如果文件无法被创建或写入时抛出异常
+     */
+saveInventoryToFile(Inventory inventory, File file)
+
+/**
+     * 从给定的YAML文件中读取Inventory对象
+     *
+     * @param file 包含Inventory数据的YAML文件
+     * @return 生成的Inventory对象
+     * @throws IOException 如果文件无法被读取时抛出异常
+     */
+Inventory loadInventoryFromFile(File file)
+```
 # 文件工具
 ```plain
 io.github.yuazer.zaxlib.Utils.TimeUtils
