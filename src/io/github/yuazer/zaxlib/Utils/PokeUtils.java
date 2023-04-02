@@ -18,7 +18,6 @@ import com.pixelmonmod.pixelmon.battles.controller.participants.WildPixelmonPart
 import com.pixelmonmod.pixelmon.entities.npcs.NPCEntity;
 import com.pixelmonmod.pixelmon.entities.npcs.NPCTrainer;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -28,6 +27,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -96,14 +96,13 @@ public class PokeUtils {
         }
     }
 
-    public LivingEntity getPokemon(int entityid) {
-        LivingEntity le = null;
-        block0:
+    public static LivingEntity getPokemonLivingEntity(Pokemon pokemon) {
+        org.bukkit.entity.LivingEntity le = null;
         for (World world : Bukkit.getWorlds()) {
             for (Entity entity : world.getEntities()) {
-                if (!(entity instanceof LivingEntity) || entity.getEntityId() != entityid) continue;
-                le = (LivingEntity) ((Object) entity);
-                continue block0;
+                if (entity instanceof org.bukkit.entity.LivingEntity && entity.getEntityId() == pokemon.getEntityID()) {
+                    le = (LivingEntity) entity;
+                }
             }
         }
         return le;
