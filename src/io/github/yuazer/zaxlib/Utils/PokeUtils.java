@@ -44,6 +44,42 @@ public class PokeUtils {
         return utils;
     }
 
+    public static LivingEntity getLivingEntity(int entityid) {
+        LivingEntity le = null;
+        for (World world : Bukkit.getWorlds()) {
+            for (Entity entity : world.getEntities()) {
+                if (entity instanceof LivingEntity && entity.getEntityId() == entityid) {
+                    le = (LivingEntity) entity;
+                }
+            }
+        }
+        return le;
+    }
+
+    public static void setNPCTrainerInFile_NBT(NPCTrainer trainer, File file) throws IOException {
+        CompoundNBT nbt = new CompoundNBT();
+        trainer.func_213281_b(nbt);
+        CompressedStreamTools.func_74795_b(nbt, file);
+    }
+
+    public static NPCTrainer getNPCTrainerInFile_NBT(File file) throws IOException {
+        NPCTrainer npcTrainer = new NPCTrainer(NMSUtils.bkToNmsWorld(Bukkit.getWorld("world")));
+        CompoundNBT nbt = CompressedStreamTools.func_74797_a(file);
+        npcTrainer.func_70037_a(nbt);
+        return npcTrainer;
+    }
+
+    //发起宝可梦与NPC的单打对战
+    public static void PlayerBattleNPCTrainer(Player player, NPCTrainer npcTrainer,int num) {
+        BattleParticipant[] bp =
+                {
+                        new PlayerParticipant(PlayerUtil.getServerPlayerEntity(player),
+                                StorageProxy.getParty(player.getUniqueId()).getAndSendOutFirstAblePokemon(PlayerUtil.getServerPlayerEntity(player)))
+                };
+        BattleParticipant[] tp = {new TrainerParticipant(npcTrainer,num)};
+        BattleRegistry.startBattle(tp, bp, npcTrainer.battleRules);
+    }
+
     //将宝可梦存为NBT文件
     public static void setPokemonInFile_NBT(Pokemon pokemon, File file) throws IOException {
         CompoundNBT nbt = new CompoundNBT();

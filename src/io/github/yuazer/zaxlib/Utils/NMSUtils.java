@@ -3,7 +3,9 @@ package io.github.yuazer.zaxlib.Utils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
+import org.bukkit.entity.Entity;
 
 public class NMSUtils {
     private static NMSUtils utils;
@@ -22,5 +24,9 @@ public class NMSUtils {
 
     public static org.bukkit.inventory.ItemStack nmsToBkItemStack(ItemStack itemStack) {
         return CraftItemStack.asBukkitCopy(itemStack);
+    }
+    public static net.minecraft.entity.Entity bkToNmsEntity(Entity entity){
+        net.minecraft.entity.Entity nmsEntity = ((CraftEntity) entity).getHandle();
+        return nmsEntity;
     }
 }
