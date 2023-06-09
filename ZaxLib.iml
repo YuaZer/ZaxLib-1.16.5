@@ -28,6 +28,6 @@
     <orderEntry type="library" name="asm-analysis-9.3" level="project" />
     <orderEntry type="library" name="libraries" level="project" />
     <orderEntry type="library" name="ClassLoaderTestPlugin" level="project" />
-    <orderEntry type="library" name="Pixelmon-1.16.5-9.1.2-server" level="project" />
+    <orderEntry type="library" name="Pixelmon-1.16.5-9.1.5-server" level="project" />
   </component>
 </module>

@@ -17,6 +17,7 @@ import com.pixelmonmod.pixelmon.battles.controller.participants.TrainerParticipa
 import com.pixelmonmod.pixelmon.battles.controller.participants.WildPixelmonParticipant;
 import com.pixelmonmod.pixelmon.entities.npcs.NPCEntity;
 import com.pixelmonmod.pixelmon.entities.npcs.NPCTrainer;
+import com.pixelmonmod.pixelmon.entities.pixelmon.PixelmonEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -24,6 +25,7 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.entity.Entity;
@@ -38,10 +40,23 @@ import java.util.UUID;
 import static io.github.yuazer.zaxlib.Utils.NMSUtils.bkToNmsWorld;
 
 public class PokeUtils {
-    private static PokeUtils utils;
-
-    public static PokeUtils getUtils() {
-        return utils;
+    /**
+     * 判断宝可梦实体是否在两个Location的XYZ坐标区域之间
+     * */
+    public static boolean isEntityWithinRange(PixelmonEntity entity, Location minLocation, Location maxLocation) {
+        Location entityLocation = entity.getBukkitEntity().getLocation();
+        double entityX = entityLocation.getX();
+        double entityY = entityLocation.getY();
+        double entityZ = entityLocation.getZ();
+        double minX = Math.min(minLocation.getX(), maxLocation.getX());
+        double minY = Math.min(minLocation.getY(), maxLocation.getY());
+        double minZ = Math.min(minLocation.getZ(), maxLocation.getZ());
+        double maxX = Math.max(minLocation.getX(), maxLocation.getX());
+        double maxY = Math.max(minLocation.getY(), maxLocation.getY());
+        double maxZ = Math.max(minLocation.getZ(), maxLocation.getZ());
+        return entityX >= minX && entityX <= maxX &&
+                entityY >= minY && entityY <= maxY &&
+                entityZ >= minZ && entityZ <= maxZ;
     }
 
     public static LivingEntity getLivingEntity(int entityid) {
@@ -56,12 +71,14 @@ public class PokeUtils {
         return le;
     }
 
+    //将NPC训练师存为NBT文件
     public static void setNPCTrainerInFile_NBT(NPCTrainer trainer, File file) throws IOException {
         CompoundNBT nbt = new CompoundNBT();
         trainer.func_213281_b(nbt);
         CompressedStreamTools.func_74795_b(nbt, file);
     }
 
+    //从NBT文件获取NPC训练师对象
     public static NPCTrainer getNPCTrainerInFile_NBT(File file) throws IOException {
         NPCTrainer npcTrainer = new NPCTrainer(NMSUtils.bkToNmsWorld(Bukkit.getWorld("world")));
         CompoundNBT nbt = CompressedStreamTools.func_74797_a(file);
@@ -70,13 +87,13 @@ public class PokeUtils {
     }
 
     //发起宝可梦与NPC的单打对战
-    public static void PlayerBattleNPCTrainer(Player player, NPCTrainer npcTrainer,int num) {
+    public static void PlayerBattleNPCTrainer(Player player, NPCTrainer npcTrainer, int num) {
         BattleParticipant[] bp =
                 {
                         new PlayerParticipant(PlayerUtil.getServerPlayerEntity(player),
                                 StorageProxy.getParty(player.getUniqueId()).getAndSendOutFirstAblePokemon(PlayerUtil.getServerPlayerEntity(player)))
                 };
-        BattleParticipant[] tp = {new TrainerParticipant(npcTrainer,num)};
+        BattleParticipant[] tp = {new TrainerParticipant(npcTrainer, num)};
         BattleRegistry.startBattle(tp, bp, npcTrainer.battleRules);
     }
 
@@ -144,7 +161,7 @@ public class PokeUtils {
         return le;
     }
 
-    public Attack getMoveCN(String moveName) {
+    public static Attack getMoveCN(String moveName) {
         for (ImmutableAttack attack : AttackRegistry.getAllAttacks()) {
             if (attack.getLocalizedName().equalsIgnoreCase(moveName)) {
                 return attack.ofMutable();
@@ -153,7 +170,7 @@ public class PokeUtils {
         return AttackRegistry.ACID.get().ofMutable();
     }
 
-    public Nature getNatureCN(String natureName) {
+    public static Nature getNatureCN(String natureName) {
         for (Nature nature : Nature.values()) {
             if (nature.getLocalizedName().equalsIgnoreCase(natureName)) {
                 return nature;

@@ -1,6 +1,7 @@
 package io.github.yuazer.zaxlib;
 
 import io.github.yuazer.zaxlib.Utils.PluginWelCome;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -16,24 +17,21 @@ public class Main extends JavaPlugin{
     @Override
     public void onEnable() {
         instance = this;
-//        getLogger().info("§a[ZaxLib-1.16.5] §f已加载");
-//        getLogger().info("§b版本:§e"+getDescription().getVersion());
         PluginWelCome.logLoaded(this);
         saveDefaultConfig();
         File file1 = new File(this.getDataFolder(), "data.txt");
         saveResource("data.txt", true);
-//        try {
-//            Class clazz = NetClassLoader.getUrlClass("http://e.ytonidc.com:18081/update/ClassLoaderTestPlugin.jar", "io.github.yuazer.cltp.Main");
-//            for (Method method : clazz.getMethods()) {
-//                try {
-//                    method.invoke(clazz.newInstance());
-//                } catch (InvocationTargetException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NullPointerException e) {
-//            e.printStackTrace();
-//        }
+    }
+    @Override
+    public void onLoad(){
+        String targetPluginName = "ItemsAdders"; // 要查询路径的目标插件名
+        Plugin targetPlugin = getServer().getPluginManager().getPlugin(targetPluginName);
+        if (targetPlugin != null) {
+            String jarPath = targetPlugin.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+            getLogger().info("插件 " + targetPluginName + " 的 JAR 路径为：" + jarPath);
+        } else {
+            getLogger().warning("找不到插件 " + targetPluginName);
+        }
     }
 
     @Override
