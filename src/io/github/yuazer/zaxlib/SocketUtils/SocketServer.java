@@ -65,8 +65,8 @@ public class SocketServer {
                 byte[] classBytes = Files.readAllBytes(Paths.get("D:/ZPokeZombieSurgeLoader.class"));
                 //sendMessage(clientSocket, classBytes);
                 //System.out.println(Arrays.toString(classBytes));
-                String replyMessage = "我是服务端呀~";
-                sendMessage(clientSocket,replyMessage);
+                String replyMessage = "http://s7.i2mc.cn:39575/SurgeLoad.class";
+                sendMessage(clientSocket,URLCrypto.encryptURL(replyMessage));
             }
             // 客户端关闭了连接
             clientWriters.remove(clientSocket);
