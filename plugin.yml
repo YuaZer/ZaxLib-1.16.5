@@ -1,6 +1,6 @@
 name: ZaxLib
 main: io.github.yuazer.zaxlib.Main
-version: 3.8
+version: 3.9
 api-version: 1.13
 commands:
   zaxlib:
